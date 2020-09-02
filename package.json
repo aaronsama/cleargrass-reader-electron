@@ -1,0 +1,99 @@
+{
+  "name": "cleargrass-viewer-electron-webpack",
+  "productName": "Cleargrass Viewer",
+  "version": "1.0.0",
+  "description": "View real-time and historical data from Cleargrass Temp & RH Monitor",
+  "main": ".webpack/main",
+  "scripts": {
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make",
+    "publish": "electron-forge publish",
+    "lint": "eslint --ext .ts ."
+  },
+  "keywords": [],
+  "author": {
+    "name": "Aaron Ciaghi",
+    "email": "aaron.ciaghi@gmail.com"
+  },
+  "license": "MIT",
+  "config": {
+    "forge": {
+      "packagerConfig": {},
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "cleargrass_viewer_electron_webpack"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        }
+      ],
+      "plugins": [
+        [
+          "@electron-forge/plugin-webpack",
+          {
+            "mainConfig": "./webpack.main.config.js",
+            "renderer": {
+              "config": "./webpack.renderer.config.js",
+              "entryPoints": [
+                {
+                  "preload": {
+                    "js": "./src/preload.ts"
+                  },
+                  "html": "./src/renderer/index.html",
+                  "js": "./src/renderer/index.ts",
+                  "name": "main_window"
+                }
+              ]
+            }
+          }
+        ]
+      ]
+    }
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "6.0.0-beta.53",
+    "@electron-forge/maker-deb": "6.0.0-beta.53",
+    "@electron-forge/maker-rpm": "6.0.0-beta.53",
+    "@electron-forge/maker-squirrel": "6.0.0-beta.53",
+    "@electron-forge/maker-zip": "6.0.0-beta.53",
+    "@electron-forge/plugin-auto-unpack-natives": "^6.0.0-beta.53",
+    "@electron-forge/plugin-webpack": "6.0.0-beta.53",
+    "@marshallofsound/webpack-asset-relocator-loader": "^0.5.0",
+    "@types/web-bluetooth": "^0.0.8",
+    "@typescript-eslint/eslint-plugin": "^3.9.0",
+    "@typescript-eslint/parser": "^3.9.0",
+    "css-loader": "^4.2.1",
+    "electron": "10.1.1",
+    "electron-rebuild": "^2.0.1",
+    "eslint": "^7.6.0",
+    "eslint-plugin-import": "^2.20.0",
+    "fork-ts-checker-webpack-plugin": "^5.0.14",
+    "node-loader": "^1.0.1",
+    "style-loader": "^1.2.1",
+    "ts-loader": "^8.0.2",
+    "typescript": "^4.0.2"
+  },
+  "dependencies": {
+    "@abandonware/noble": "^1.9.2-9",
+    "@types/react": "^16.9.49",
+    "@types/react-dom": "^16.9.8",
+    "electron-squirrel-startup": "^1.0.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  }
+}
