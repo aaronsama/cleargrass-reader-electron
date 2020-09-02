@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { DeviceState, readValues, connectToDevice } from "./dataReader";
+import Display from './Display';
 
 const App = () => {
   const [state, setState] = useState<DeviceState>({ connecting: false, connected: false });
@@ -22,12 +23,15 @@ const App = () => {
   return (
     <div>
       {!connected && !connecting &&  
+        <>
+          <p>Press the button on the back of the device for 2 seconds and press the button below</p>
         <button
-          onClick={() => connectToDevice(setState)}
-          disabled={connected}
-        >
-          Connect
-        </button>
+            onClick={() => connectToDevice(setState)}
+            disabled={connected}
+          >
+            Connect
+          </button>
+        </>
       }
       {connecting &&
         <h2>Connecting...</h2>
@@ -35,8 +39,9 @@ const App = () => {
       {connected &&
         <h2>Connected to {device.name}</h2>
       }
-      <p>Temperature: {temperature || "??"} C</p>
-      <p>Humidity: {humidity || "??"} %</p>
+      {(temperature && humidity) &&
+        <Display temperature={temperature} humidity={humidity} />
+      }
       <label htmlFor="update-frequency">Update frequency (s)</label>
       <input
         id="update-frequency"

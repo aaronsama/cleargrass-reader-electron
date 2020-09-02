@@ -1,8 +1,8 @@
 import { Dispatch, SetStateAction } from "react";
 
 export type DeviceState = {
-  connecting?: boolean;
-  connected?: boolean;
+  connecting: boolean;
+  connected: boolean;
   device?: BluetoothDevice;
   temperature?: number;
   humidity?: number;
@@ -19,7 +19,7 @@ const dataViewToHexString = (dataView: DataView): string =>
 export const connectToDevice = async (
   setState: Dispatch<SetStateAction<DeviceState>>,
 ) => {
-  setState({ connecting: true });
+  setState({ connected: false, connecting: true });
 
   const device = await navigator.bluetooth.requestDevice({
     acceptAllDevices: true,
@@ -56,11 +56,14 @@ export const readValues = async (
     const humidityBytes = data.slice(4);
     const humidity = (humidityBytes[0] + humidityBytes[1] * 2 ** 8) / 10;
 
-    setState({
+    window.ipc.sendNewData({ temperature, humidity });
+
+    setState(state => ({
+      ...state,
       temperature,
       humidity,
       rawData,
-    });
+    }));
 
     await dataCharacteristic.stopNotifications();
   }

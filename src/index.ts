@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, ipcMain } from 'electron';
 import { setMainMenu } from './main/main_menu';
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: any;
@@ -17,7 +17,7 @@ const createWindow = (): void => {
   const mainWindow = new BrowserWindow({
     show: false,
     height: 600,
-    width: 800,
+    width: 600,
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
@@ -76,3 +76,8 @@ app.on('activate', () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
+import { saveReading } from './main/database';
+
+ipcMain.on('th-data', (_event, reading: { temperature: number, humidity: number }) => {
+  saveReading.run(reading);
+})
