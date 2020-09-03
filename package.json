@@ -57,6 +57,14 @@
                   "html": "./src/renderer/index.html",
                   "js": "./src/renderer/index.ts",
                   "name": "main_window"
+                },
+                {
+                  "preload": {
+                    "js": "./src/preloadLiveGraph.ts"
+                  },
+                  "html": "./src/renderer/live_graph.html",
+                  "js": "./src/renderer/live_graph.ts",
+                  "name": "live_graph_window"
                 }
               ]
             }
@@ -94,9 +102,11 @@
     "typescript": "^4.0.2"
   },
   "dependencies": {
+    "apexcharts": "^3.20.0",
     "better-sqlite3": "^7.1.0",
     "electron-squirrel-startup": "^1.0.0",
     "react": "^16.13.1",
+    "react-apexcharts": "^1.3.7",
     "react-dom": "^16.13.1",
     "styled-components": "^5.1.1"
   }

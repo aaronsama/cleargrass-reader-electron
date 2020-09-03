@@ -1,4 +1,3 @@
-import { IpcRendererEvent } from "electron/main";
 import { contextBridge, ipcRenderer } from "electron";
 import { Reading } from "./types";
 

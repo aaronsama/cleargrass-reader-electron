@@ -4,12 +4,14 @@ import Display from "./Display";
 import ConnectionStatus from "./ConnectionStatus";
 import Settings from "./Settings";
 
+const DEFAULT_UPDATE_FREQUENCY = 30;
+
 const App = () => {
   const [state, setState] = useState<DeviceState>({
     connecting: false,
     connected: false,
   });
-  const [updateFrequency, setUpdateFrequency] = useState<number>(60);
+  const [updateFrequency, setUpdateFrequency] = useState<number>(DEFAULT_UPDATE_FREQUENCY);
   const {
     connecting,
     connected,
@@ -40,7 +42,7 @@ const App = () => {
         deviceName={device?.name}
         onConnect={() => connectToDevice(setState)}
       />
-      {temperature && humidity && (
+      {connected && (
         <>
           <Display temperature={temperature} humidity={humidity} />
           <Settings

@@ -21,3 +21,5 @@ export const lastTimestamp = db.prepare(
 );
 
 export const reading = db.prepare("SELECT * FROM readings WHERE id = ?");
+
+export const allReadings = db.prepare("SELECT DISTINCT * FROM readings");
