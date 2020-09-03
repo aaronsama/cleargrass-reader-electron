@@ -45,8 +45,16 @@ export const readValues = async (
   await dataCharacteristic.startNotifications();
 
   async function listenForChanges(this: BluetoothRemoteGATTCharacteristic) {
+    await dataCharacteristic.stopNotifications();
+    dataCharacteristic.removeEventListener(
+      "characteristicvaluechanged",
+      listenForChanges,
+    );
+
     const data = new Uint8Array(this.value.buffer);
     const rawData = dataViewToHexString(this.value);
+
+    if (rawData.match(/0508[0]{8}/)) return;
 
     const temperatureBytes = data.slice(2, 4);
     // always convert to C by xor-ing with 0x7f (in case the value is F)
@@ -58,14 +66,12 @@ export const readValues = async (
 
     window.ipc.sendNewData({ temperature, humidity });
 
-    setState(state => ({
+    setState((state) => ({
       ...state,
       temperature,
       humidity,
       rawData,
     }));
-
-    await dataCharacteristic.stopNotifications();
   }
 
   dataCharacteristic.addEventListener(
