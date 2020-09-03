@@ -10,6 +10,7 @@ import {
   DataStoredListenerCallback,
 } from "../../types";
 import Chart from "react-apexcharts";
+import { DateTime } from "luxon";
 
 type Series = {
   name: "temperature" | "humidity";
@@ -87,7 +88,7 @@ const useSeries = () => {
   }, []);
 
   return series;
-}
+};
 
 const LiveGraph = () => {
   const chartOptions = {
@@ -106,7 +107,7 @@ const LiveGraph = () => {
       type: "datetime",
       labels: {
         formatter: (val: number, timestamp: number) =>
-          new Date(timestamp).toLocaleString(),
+          DateTime.fromMillis(timestamp).toFormat("F"),
         rotate: -45,
       },
     },
@@ -114,6 +115,7 @@ const LiveGraph = () => {
       {
         seriesName: "Temperature",
         max: 55,
+        forceNiceScale: true,
         title: {
           text: "Temperature",
           style: {
@@ -124,7 +126,11 @@ const LiveGraph = () => {
           show: true,
           color: "#008FFB",
         },
+        axisTicks: {
+          show: true,
+        },
         labels: {
+          formatter: (value: number): string => `${value} ℃`,
           style: {
             color: "#008FFB",
           },
@@ -134,6 +140,7 @@ const LiveGraph = () => {
         seriesName: "Humidity",
         opposite: true,
         max: 100,
+        min: 0,
         title: {
           text: "Humidity",
           style: {
@@ -144,7 +151,11 @@ const LiveGraph = () => {
           show: true,
           color: "#00E396",
         },
+        axisTicks: {
+          show: true,
+        },
         labels: {
+          formatter: (value: number): string => `${value} %`,
           style: {
             color: "#00E396",
           },

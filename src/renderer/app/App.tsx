@@ -11,7 +11,9 @@ const App = () => {
     connecting: false,
     connected: false,
   });
-  const [updateFrequency, setUpdateFrequency] = useState<number>(DEFAULT_UPDATE_FREQUENCY);
+  const [updateFrequency, setUpdateFrequency] = useState<number>(
+    DEFAULT_UPDATE_FREQUENCY,
+  );
   const {
     connecting,
     connected,
@@ -44,7 +46,7 @@ const App = () => {
       />
       {connected && (
         <>
-          <Display temperature={temperature} humidity={humidity} />
+          <Display temperature={temperature || 0} humidity={humidity || 0} />
           <Settings
             updateFrequency={updateFrequency}
             onChange={setUpdateFrequency}

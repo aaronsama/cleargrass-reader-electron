@@ -6,7 +6,7 @@ declare const LIVE_GRAPH_WINDOW_PRELOAD_WEBPACK_ENTRY: any;
 const createLiveGraphWindow = (): BrowserWindow => {
   const liveGraphWindow = new BrowserWindow({
     show: false,
-    height: 550,
+    height: 570,
     width: 700,
     webPreferences: {
       nodeIntegration: false,
