@@ -65,14 +65,14 @@ const Display = ({ temperature, humidity }: Reading) => (
         <div>{Math.floor(temperature)}.</div>
         <TemperatureRightSide>
           <div>℃</div>
-          <div>{Math.floor((temperature % 1) * 10)}</div>
+          <div>{((temperature % 1) * 10).toPrecision(1)}</div>
         </TemperatureRightSide>
       </TemperatureDisplay>
       <HumidityDisplay>
         <div>{Math.floor(humidity)}.</div>
         <HumidityRightSide>
           <div>%</div>
-          <div>{Math.floor((humidity % 1) * 10)}</div>
+          <div>{((humidity % 1) * 10).toPrecision(1)}</div>
         </HumidityRightSide>
       </HumidityDisplay>
     </InnerDisplayFrame>
