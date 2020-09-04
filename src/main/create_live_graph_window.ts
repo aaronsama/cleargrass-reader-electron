@@ -1,4 +1,4 @@
-import { BrowserWindow } from "electron";
+import { BrowserWindow, app } from "electron";
 
 declare const LIVE_GRAPH_WINDOW_WEBPACK_ENTRY: any;
 declare const LIVE_GRAPH_WINDOW_PRELOAD_WEBPACK_ENTRY: any;
@@ -20,7 +20,8 @@ const createLiveGraphWindow = (): BrowserWindow => {
 
   liveGraphWindow.on("ready-to-show", () => {
     liveGraphWindow.show();
-    liveGraphWindow.webContents.openDevTools();
+    
+    if (!app.isPackaged) liveGraphWindow.webContents.openDevTools();
   });
 
   return liveGraphWindow;

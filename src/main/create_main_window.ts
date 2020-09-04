@@ -1,4 +1,4 @@
-import { BrowserWindow } from "electron";
+import { BrowserWindow, app } from "electron";
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: any;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: any;
@@ -26,7 +26,7 @@ const createMainWindow = (): BrowserWindow => {
     mainWindow.show();
 
     // Open the DevTools.
-    mainWindow.webContents.openDevTools();
+    if (!app.isPackaged) mainWindow.webContents.openDevTools();
   });
 
   mainWindow.webContents.on(
